@@ -1,2 +1,14 @@
 snappy-boulder-476716-s6-22a9a3f024e0.json
 google-cloud-sdk/*
+
+# Ignore the .terraform directory anywhere in the project
+**/.terraform/
+
+# Add other common Terraform ignores (good practice)
+# These are usually generated inside the working directory.
+*.tfplan
+*.tfstate
+*.tfstate.backup
+
+# Ignore the CLI configuration file in the current directory
+.terraformrc
