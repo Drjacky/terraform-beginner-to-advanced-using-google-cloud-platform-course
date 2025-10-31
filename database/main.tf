@@ -5,6 +5,9 @@ resource "google_sql_database_instance" "gcp_database" {
   region           = var.db_region
   database_version = var.database_version
 
+  # Allow destruction
+  deletion_protection = false
+
   settings {
     tier      = var.tier
     disk_size = var.disk_size
