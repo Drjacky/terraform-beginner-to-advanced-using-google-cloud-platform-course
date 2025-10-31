@@ -32,3 +32,7 @@ output "name" {
 output "zone" {
   value = "${google_compute_instance.default.*.zone}"
 }
+
+output "instance_id" {
+  value = "${join(",",google_compute_instance.default.*.id)}"
+}
