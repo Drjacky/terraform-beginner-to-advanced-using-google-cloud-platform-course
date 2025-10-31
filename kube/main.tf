@@ -13,6 +13,7 @@ module "gke" {
   name                       = "gke-test-1"
   region                     = "us-central1"
   zones                      = ["us-central1-a", "us-central1-b", "us-central1-f"]
+  deletion_protection        = false
   network                    = "default"
   subnetwork                 = "default"
   ip_range_pods              = ""
