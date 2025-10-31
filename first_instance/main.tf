@@ -1,7 +1,9 @@
+
+
 resource "google_compute_instance" "default" {
     count = "1" #"${length(var.name_count)}"
     name = "list-${count.index + 1}"
-    machine_type = var.machine_type["dev"]
+    machine_type = "${var.environment == "production" ? var.machine_type["prod"] : var.machine_type_dev}" # var.machine_type["dev"]
     zone = "europe-west1-b"
 
     # --- Required Blocks ---
@@ -20,7 +22,7 @@ resource "google_compute_instance" "default" {
       scopes = ["userinfo-email", "compute-ro", "storage-ro"]
     }
 
-    depends_on = [ google_compute_instance.second ]
+    # depends_on = [ google_compute_instance.second ]
 }
 
 resource "google_compute_instance" "second" {
