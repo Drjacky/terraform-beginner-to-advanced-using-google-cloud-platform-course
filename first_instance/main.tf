@@ -1,65 +1,65 @@
 
 
 resource "google_compute_instance" "default" {
-    count = "1" #"${length(var.name_count)}"
-    name = "list-${count.index + 1}"
-    machine_type = "${var.environment == "production" ? var.machine_type["prod"] : var.machine_type_dev}" # var.machine_type["dev"]
-    zone = "europe-west1-b"
+  count        = "1" #"${length(var.name_count)}"
+  name         = "list-${count.index + 1}"
+  machine_type = var.environment == "production" ? var.machine_type["prod"] : var.machine_type_dev # var.machine_type["dev"]
+  zone         = "europe-west1-b"
 
-    # --- Required Blocks ---
-    boot_disk {
-        initialize_params {
-            image = var.image # "${var.image}"
-        }
+  # --- Required Blocks ---
+  boot_disk {
+    initialize_params {
+      image = var.image # "${var.image}"
     }
+  }
 
-    # 2. Network Interface Configuration
-    network_interface {
-        network = "default"
-    }
+  # 2. Network Interface Configuration
+  network_interface {
+    network = "default"
+  }
 
-    service_account {
-      scopes = ["userinfo-email", "compute-ro", "storage-ro"]
-    }
+  service_account {
+    scopes = ["userinfo-email", "compute-ro", "storage-ro"]
+  }
 
-    # depends_on = [ google_compute_instance.second ]
+  # depends_on = [ google_compute_instance.second ]
 }
 
 resource "google_compute_instance" "second" {
-    count = "1"
-    name = "second-${count.index + 1}"
-    machine_type = var.machine_type["dev"]
-    zone = "europe-west1-b"
+  count        = "1"
+  name         = "second-${count.index + 1}"
+  machine_type = var.machine_type["dev"]
+  zone         = "europe-west1-b"
 
-    # --- Required Blocks ---
-    boot_disk {
-        initialize_params {
-            image = var.image # "${var.image}"
-        }
+  # --- Required Blocks ---
+  boot_disk {
+    initialize_params {
+      image = var.image # "${var.image}"
     }
+  }
 
-    # 2. Network Interface Configuration
-    network_interface {
-        network = "default"
-    }
+  # 2. Network Interface Configuration
+  network_interface {
+    network = "default"
+  }
 
-    service_account {
-      scopes = ["userinfo-email", "compute-ro", "storage-ro"]
-    }
+  service_account {
+    scopes = ["userinfo-email", "compute-ro", "storage-ro"]
+  }
 }
 
 output "machine_type" {
-  value = "${google_compute_instance.default.*.machine_type}"
+  value = google_compute_instance.default.*.machine_type
 }
 
 output "name" {
-  value = "${google_compute_instance.default.*.name}"
+  value = google_compute_instance.default.*.name
 }
 
 output "zone" {
-  value = "${google_compute_instance.default.*.zone}"
+  value = google_compute_instance.default.*.zone
 }
 
 output "instance_id" {
-  value = "${join(",",google_compute_instance.default.*.id)}"
+  value = join(",", google_compute_instance.default.*.id)
 }

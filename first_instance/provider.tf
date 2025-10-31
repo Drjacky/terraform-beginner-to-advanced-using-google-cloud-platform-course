@@ -3,7 +3,7 @@ variable "path" {
 }
 
 provider "google" {
-  project = "snappy-boulder-476716-s6"
-  region = "europe-west1-b"
-  credentials = "${file("${var.path}/snappy-boulder-476716-s6-22a9a3f024e0.json")}"
+  project     = "snappy-boulder-476716-s6"
+  region      = "europe-west1-b"
+  credentials = file("${var.path}/snappy-boulder-476716-s6-22a9a3f024e0.json")
 }
