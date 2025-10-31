@@ -1,3 +1,4 @@
+
 locals {
   name = "list-${var.name1}-${var.name2}-${var.name3}"
 }
@@ -44,6 +45,18 @@ resource "google_compute_instance" "default" {
   }
 
   # depends_on = [ google_compute_instance.second ]
+}
+
+resource "google_compute_disk" "default" {
+  name = "test-desk"
+  type = "pd-ssd"
+  zone = var.zone
+  size = "10"
+}
+
+resource "google_compute_attached_disk" "default" {
+  disk     = google_compute_disk.default.self_link
+  instance = google_compute_instance.default[0].self_link
 }
 
 /*resource "google_compute_instance" "second" {
